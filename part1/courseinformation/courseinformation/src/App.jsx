@@ -17,7 +17,7 @@ const App = () => {
 
   const Header = ({course}) => <h1>{course}</h1>
   const Part = ({part}) => <p>{part.name} {part.exercises}</p>
-  const Content = () => {
+  const Content = ({parts}) => {
     return (
       <div>
         <Part part={parts[0]}/>
