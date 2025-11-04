@@ -9,7 +9,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-    const [persons, setPersons] = useState([]);
+  const [persons, setPersons] = useState([]);
 
   useEffect(() => {
     personService.getAll().then((initialPersons) => {
@@ -59,6 +59,23 @@ const App = () => {
     });
   };
 
+  const handleDeletePerson = (id, name) => {
+    if (!window.confirm(`Delete ${name}?`)) {
+      return;
+    }
+
+    personService
+      .remove(id)
+      .then(() => {
+        setPersons((prevPersons) =>
+          prevPersons.filter((person) => person.id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error(`Failed to delete ${name}`, error);
+      });
+  };
+
   const personsToShow =
     searchTerm === ""
       ? persons
@@ -78,7 +95,7 @@ const App = () => {
         onSubmit={addName}
       />
       <h3>Numbers</h3>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} onDelete={handleDeletePerson} />
     </div>
   );
 };
