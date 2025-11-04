@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
+import personService from './services/phonebook'
 
 const App = () => {
 
@@ -12,10 +12,8 @@ const App = () => {
     const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
+    personService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -54,9 +52,11 @@ const App = () => {
       setNewName("");
       return;
     }
-    setPersons(persons.concat(nameObject));
-    setNewName("");
-    setNewNumber("");
+    personService.create(nameObject).then((createdPerson) => {
+      setPersons((prevPersons) => prevPersons.concat(createdPerson));
+      setNewNumber("");
+      setNewName("");
+    });
   };
 
   const personsToShow =
