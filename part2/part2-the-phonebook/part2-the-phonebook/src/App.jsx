@@ -101,7 +101,7 @@ const App = () => {
           setNotification({message: `Updated ${returnedPerson.name}'s number`, type: "success" })
         })
         .catch((error) => {
-          setNotification({message: `Failed to update ${newName}`, type: "error"})
+          setNotification({message: `Failed to update ${newName}. Perhaps the person has been deleted from the server already`, type: "error"})
         });
       setNewName("");
       setNewNumber("");
