@@ -38,15 +38,25 @@ const App = () => {
     }
   }, [countriesToShow]);
 
+  // Handle "Show" button click
+  const handleShowCountry = (country) => {
+    setSearchTerm(country.name.common.toLowerCase());
+  }
+
+  const resetSearchTerm = () => {
+    setSearchTerm("");
+  }
+
   // UI
   return (
     <div>
       <div>
         search countries:{" "}
         <input value={searchTerm} onChange={handleSearchChange} />
+        <button onClick={resetSearchTerm}>Reset</button>
       </div>
       <h3>Countries</h3>
-      <Countries countries={countriesToShow}/>
+      <Countries countries={countriesToShow} onShow={handleShowCountry}/>
     </div>
   );
 };

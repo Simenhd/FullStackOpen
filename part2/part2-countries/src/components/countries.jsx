@@ -1,6 +1,6 @@
 import Country from "./country";
 
-const Countries = ({ countries }) => {
+const Countries = ({ countries, onShow }) => {
 
     switch (true) {
         case countries.length === 0:
@@ -31,7 +31,7 @@ const Countries = ({ countries }) => {
   return (
     <ul>
       {countries.map((country) => (
-        <Country key={country.cca3} country={country} />
+        <Country key={country.cca3} country={country} onShow={() => onShow(country)} />
       ))}
     </ul>
   );
